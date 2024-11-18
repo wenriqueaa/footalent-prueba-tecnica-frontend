@@ -1,1 +1,76 @@
-<p>producto works!</p>
+<main>
+  <h1 class="pagesTitle">Lista de Productos</h1>
+  <div class="button_space">
+    <!-- Botón para mostrar/ocultar el formulario -->
+    <button (click)="toggleForm()" style="margin-bottom: 10px;">{{ mostrarFormulario ? 'Cancelar' : 'Agregar Producto'
+      }}</button> 
+    <!-- Formulario para agregar producto -->
+    <form *ngIf="mostrarFormulario" (ngSubmit)="crearProducto()">
+      <div>
+        <label for="productonombre">Nombre:</label>
+        <input id="productonombre" [(ngModel)]="nuevoProducto.productonombre" name="productonombre" required />
+      </div>
+      <div>
+        <label for="productodescripcion">Descripción:</label>
+        <input id="productodescripcion" [(ngModel)]="nuevoProducto.productodescripcion" name="productodescripcion" />
+      </div>
+      <div>
+        <label for="productoprecio">Precio:</label>
+        <input id="productoprecio" type="number" [(ngModel)]="nuevoProducto.productoprecio" name="productoprecio"
+          required />
+      </div>
+      <div>
+        <label for="productocategoria">Categoría:</label>
+        <select id="productocategoria" [(ngModel)]="nuevoProducto.productocategoria" name="productocategoria" required>
+          <option value="Electrónica">Electrónica</option>
+          <option value="Ropa">Ropa</option>
+          <option value="Hogar">Hogar</option>
+          <option value="Libros">Libros</option>
+          <option value="Otros">Otros</option>
+        </select>
+      </div>
+      <div>
+        <label for="productostock">Stock:</label>
+        <input id="productostock" type="number" [(ngModel)]="nuevoProducto.productostock" name="productostock"
+          required />
+      </div>
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+  <div *ngIf="!mostrarFormulario">
+      <!-- Tabla para mostrar los productos -->
+      <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productos">
+            <td>{{ producto.productonombre }}</td>
+            <td>{{ producto.productodescripcion }}</td>
+            <td>{{ producto.productoprecio | currency:'USD':'symbol' }}</td>
+            <td>{{ producto.productocategoria }}</td>
+            <td>{{ producto.productostock }}</td>
+            <td>
+              <button (click)="eliminarProducto(producto._id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table> <!-- Lista de productos -->
+    <!-- <ul *ngIf="productos.length > 0">
+      <li *ngFor="let producto of productos">
+        <h3>{{ producto.productonombre }}</h3>
+        <p>{{ producto.productodescripcion }}</p>
+        <p><strong>Precio:</strong> {{ producto.productoprecio | currency:'USD':'symbol' }}</p>
+      </li>
+    </ul>
+    <p *ngIf="productos.length === 0">No hay productos disponibles</p> -->
+
+  </div>
+</main>
